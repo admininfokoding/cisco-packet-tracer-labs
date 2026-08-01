@@ -1,0 +1,13 @@
+---
+- name: Backup Konfigurasi Router & Switch Cisco IOS
+  hosts: cisco_routers
+  gather_facts: no
+  connection: network_cli
+
+  tasks:
+    - name: Ambil running-config dan simpan otomatis
+      cisco.ios.ios_config:
+        backup: yes
+        backup_options:
+          filename: "backup_{{ inventory_hostname }}_{{ ansible_date_time.date }}.cfg"
+          dir_path: "./backups"
